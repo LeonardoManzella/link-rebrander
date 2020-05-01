@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html class="ide314 idc314">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="author" content="Sniply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sniply Bar</title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"
+    />
+    <script
+      async=""
+      src="https://www.google-analytics.com/analytics.js"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"
+      type="text/javascript"
+    ></script>
+  </head>
+  <body style="">
+    <style>
+      *:not(.fa) {
+        font-family: "Open Sans", sans-serif !important;
+        font-weight: normal;
+      }
+
+      *,
+      *:before,
+      *:after {
+        -moz-box-sizing: border-box !important;
+        -webkit-box-sizing: border-box !important;
+        -ms-box-sizing: border-box !important;
+        -o-box-sizing: border-box !important;
+        box-sizing: border-box !important;
+      }
+      .animated {
+        -webkit-transition: all 0.2s ease;
+        -moz-transition: all 0.2s ease;
+        -ms-transition: all 0.2s ease;
+        -o-transition: all 0.2s ease;
+        transition: all 0.2s ease;
+      }
+      .button {
+        height: 36px;
+        width: auto;
+        min-width: 80px;
+
+        display: table-cell;
+        padding: 0 15px 0 15px;
+        margin: 0 0 0 15px;
+        float: right;
+        white-space: nowrap;
+
+        cursor: pointer;
+        background-image: none;
+        border-radius: 5px;
+        border: 3px solid #00bfff;
+
+        font-size: 16px;
+        line-height: 31px;
+        font-weight: 400 !important;
+        text-decoration: none;
+        text-align: center;
+      }
+      .button:hover {
+        text-decoration: none;
+      }
+      .button.mobile {
+        bottom: 12px;
+        font-size: 10px;
+        padding: 0 5px 0 5px;
+        line-height: 20px;
+      }
+
+      .evenly-pad {
+        padding-right: 2.5px;
+        padding-left: 2.5px;
+      }
+
+      #sniplyPreview.top,
+      #sniplyPreview.top-right {
+        bottom: auto !important;
+        top: 0px !important;
+      }
+
+      #sniplyBar {
+        position: fixed;
+        display: table;
+        pointer-events: none;
+      }
+      #sniplyBar.fullwidth.top,
+      #sniplyBar.fullwidth.top-right {
+        left: 0 !important;
+        right: 0 !important;
+      }
+      #sniplyBar.top,
+      #sniplyBar.top-right {
+        bottom: auto !important;
+        top: 0;
+      }
+      #sniplyBar.top-right {
+        left: auto !important;
+        right: 0 !important;
+      }
+      #sniplyBar.bottom-right:not(.fullwidth) {
+        left: auto !important;
+        right: 0 !important;
+      }
+
+      #socialbar {
+        position: fixed;
+        border: none;
+        pointer-events: fill;
+        box-shadow: none;
+        z-index: 101;
+      }
+      #socialbar > a {
+        border: none;
+        outline: none;
+      }
+
+      #profilePhoto {
+        border: none;
+        box-shadow: none;
+        background-color: white;
+        object-fit: cover;
+      }
+
+      #profileName {
+        text-align: left;
+        color: #222;
+        display: block;
+        opacity: 0.6;
+        overflow: hidden;
+        white-space: nowrap;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+      #profileName:hover {
+        opacity: 0.8;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+      #profileName.mobile {
+        display: none;
+      }
+
+      #logo.hide_sniply_logo {
+        display: none;
+      }
+      #logo.mobile {
+        display: none;
+      }
+      #logoImage {
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-image: url("https://ffb2efd5105ff0aedbc9-9cdacdeebf0faa19b665bf427f0c8092.ssl.cf1.rackcdn.com/img/logo_122x33.png");
+        opacity: 0.6;
+      }
+      #logoImage.white_sniply_logo {
+        -webkit-filter: invert(100%);
+        filter: invert(100%);
+      }
+      #logoImage:hover {
+        opacity: 0.85 !important;
+      }
+      #logoImage.hide_sniply_logo {
+        display: none;
+      }
+
+      .messageContainer {
+        position: absolute;
+        text-align: center;
+        color: black;
+        background-color: white;
+        text-shadow: none;
+        pointer-events: fill;
+        box-shadow: none;
+        opacity: 1;
+        z-index: 100;
+      }
+      #dropshadowMessageContainer {
+        z-index: 50;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+      #message {
+        display: table;
+        text-align: left;
+        overflow: hidden;
+        width: auto;
+        letter-spacing: 0.5px;
+        color: #222;
+      }
+
+      #messageText {
+        display: table-cell;
+        vertical-align: middle;
+        font-weight: 400;
+        font-size: 16px;
+        color: #222;
+      }
+      #messageText.mobile {
+        font-size: 10px;
+      }
+      #messageText > a {
+        text-decoration: underline;
+        font-weight: inherit;
+        font-size: inherit;
+        color: rgb(0, 186, 250);
+      }
+
+      #minimizeToggle {
+        opacity: 0.4;
+        cursor: pointer;
+        color: #222;
+        float: right;
+        text-decoration: none;
+      }
+      #minimizeToggle:hover {
+        opacity: 0.6;
+      }
+      #contentMessageContainer:hover #logoImage {
+        opacity: 0.75;
+      }
+      #minimizeToggle.mobile {
+        display: none;
+      }
+
+      #whatsThis,
+      #mobileWhatsThis {
+        float: right;
+        text-decoration: none;
+        color: #222;
+        font-size: 12px;
+        opacity: 0.4;
+        cursor: pointer;
+      }
+      #whatsThis:hover,
+      #mobileWhatsThis {
+        opacity: 0.6;
+      }
+
+      #mobileWhatsThis {
+        display: none;
+      }
+      #mobileWhatsThis.mobile {
+        display: block;
+        position: absolute;
+        background-color: #fff;
+      }
+      #whatsThis.mobile {
+        display: none;
+      }
+
+      .buttonAction {
+        background-color: #00bfff;
+        color: white;
+      }
+
+      .linkAction {
+        color: #00bfff;
+        background-color: transparent !important;
+        padding-left: 0;
+        padding-right: 0;
+        min-width: inherit;
+        text-decoration: underline;
+        margin-left: 3px;
+        border: 3px solid transparent !important;
+      }
+
+      .formAction {
+        width: 175px;
+        margin-left: 5px;
+      }
+      .formAction.desktop {
+        width: 225px;
+      }
+      #messageText.formAction {
+        padding-bottom: 15px;
+      }
+      #formInput {
+        float: right;
+        width: 100px;
+        border-radius: 5px 0 0 5px;
+        -webkit-appearance: none !important;
+        color: #282323;
+        outline: 0;
+        height: 16px;
+        padding: 6px 6px;
+        margin: 0;
+        line-height: 18px;
+        font-size: 13px;
+        font-weight: normal;
+        vertical-align: top;
+        background-color: #fff;
+        min-height: 36px;
+        box-shadow: none;
+        border: 1px solid #e5e9ec;
+        transition: background 0.2s linear 0s, box-shadow 0.5s linear 0s;
+      }
+      #formInput.desktop {
+        width: 165px;
+      }
+      .errorNotification {
+        box-shadow: 0 0 1px #e74c3c !important;
+      }
+      #formButton {
+        min-width: 40px;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        margin-left: 0;
+        cursor: pointer;
+        background-color: #00bfff;
+        color: white;
+      }
+      #formButton.mobile {
+        line-height: 30px;
+      }
+      #formButton.submittedFormAction {
+        background-color: #8dc153 !important;
+        border: 3px solid #8dc153 !important;
+      }
+    </style>
+
+    <script>
+      function updateSizing(width) {
+        if (width <= 700) {
+          $(".sized, iframe.top").removeClass("desktop").addClass("mobile");
+
+          $('.sized:not(".fullwidth")')
+            .removeClass("social candy bean")
+            .addClass("fullwidth fullwidth-forced");
+        } else {
+          $(".sized").removeClass("mobile").addClass("desktop");
+          $(".image.fullwidth-forced").removeClass(
+            "fullwidth fullwidth-forced"
+          );
+        }
+      }
+    </script>
+
+    <style>
+      #sniplyPreview.fullwidth {
+        height: 50px;
+      }
+
+      #sniplyBar.fullwidth {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        max-width: 100%;
+        height: 50px;
+        background-color: black;
+      }
+
+      #socialbar.fullwidth {
+        margin-left: 0;
+        width: 50px;
+        height: 50px;
+        border-top-left-radius: 5px;
+      }
+
+      #profilePhoto.fullwidth {
+        width: 50px;
+        height: 50px;
+      }
+
+      #profileName.fullwidth {
+        height: 50px;
+        width: 20%;
+        float: left;
+        vertical-align: middle;
+        padding-left: 60px;
+        line-height: 53px;
+        font-size: 14px;
+      }
+
+      #logoImage.fullwidth {
+        width: 50px;
+        height: 18px;
+        margin-top: 19px;
+      }
+      #logo.fullwidth {
+        height: 50px;
+        float: right;
+      }
+
+      .messageContainer.fullwidth {
+        width: 100%;
+        height: 50px;
+        left: 0;
+
+        line-height: 20px;
+        padding: 0;
+        font-size: 16px;
+        border: none;
+      }
+      #speechArrow.fullwidth {
+        display: none;
+      }
+
+      #message.fullwidth {
+        height: 50px;
+        margin: 0 auto;
+        padding-right: 10%;
+        padding-top: 0;
+      }
+      #message.fullwidth.mobile {
+        margin-top: 0;
+        float: left;
+        padding-right: 10px;
+      }
+
+      #messageText.fullwidth {
+        text-align: center;
+        height: 50px;
+      }
+      #messageText.fullwidth.mobile {
+        padding-left: 55px;
+        height: 45px;
+        text-align: left;
+        line-height: 12px;
+      }
+
+      #whatsThis.fullwidth {
+        line-height: 50px;
+      }
+
+      #minimizeToggle.fullwidth {
+        height: 50px;
+        line-height: 50px;
+        padding-right: 10px;
+        font-size: 20px;
+      }
+
+      .linkAction.fullwidth {
+        margin-top: 6px;
+        height: 36px;
+        line-height: 31px;
+      }
+
+      .buttonAction.fullwidth {
+        margin-top: 6px;
+        height: 36px;
+        line-height: 31px;
+      }
+
+      .formAction.fullwidth {
+        padding-top: 7px;
+      }
+      #formButton {
+        float: right;
+      }
+    </style>
+    <style>
+      #sniplyBar.social {
+        left: 0;
+        bottom: 0;
+        background-color: transparent;
+        margin-top: 15px;
+      }
+      #sniplyBar.social.mobile {
+        width: 100%;
+        height: 87px;
+        bottom: -15px;
+        left: -15px;
+      }
+      #sniplyBar.social.desktop {
+        width: 100%;
+        max-width: 100%;
+        height: 100px;
+      }
+
+      #socialbar.social {
+        margin-left: 15px;
+        width: 87px;
+        height: 87px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+      #socialbar.social.mobile {
+        width: 60px;
+        height: 60px;
+      }
+      #socialbar.social.top-right,
+      #socialbar.social.bottom-right {
+        left: auto !important;
+        right: 0;
+        margin-right: 15px;
+      }
+
+      #profilePhoto.social {
+        width: 87px;
+        height: 87px;
+        border-radius: 5px;
+      }
+      #profilePhoto.social.mobile {
+        width: 60px;
+        height: 60px;
+      }
+
+      #profileName.social {
+        width: 60%;
+        line-height: 20px;
+        font-size: 12px;
+        padding-bottom: 3px;
+      }
+
+      #logo.social {
+        float: right;
+        text-decoration: none;
+      }
+      #logoImage.social.desktop {
+        width: 46px;
+        height: 14px;
+        margin-top: 3px;
+      }
+
+      .messageContainer.social {
+        min-width: 280px;
+        height: 87px;
+        left: 120px;
+
+        line-height: 18px;
+        padding: 10px 15px 10px 15px;
+        font-size: 16px;
+
+        border: 2px solid white;
+        border-radius: 5px;
+      }
+      .messageContainer.social.mobile {
+        left: 105px;
+        height: 60px;
+      }
+      .messageContainer.social.top-right,
+      .messageContainer.social.bottom-right {
+        left: auto !important;
+        right: 120px;
+      }
+      #speechArrow.social {
+        position: fixed;
+        width: 0;
+        height: 0;
+        border: 10px solid #fff;
+        left: inherit;
+        opacity: 1;
+        margin-left: -7px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        z-index: -1;
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
+      #speechArrow.social.top-right,
+      #speechArrow.social.bottom-right {
+        left: auto !important;
+        right: 116px;
+      }
+
+      #message.social {
+        height: 36px;
+        margin-top: 4px;
+      }
+
+      #messageText.social {
+        height: 37px;
+      }
+
+      #formInput.social.mobile {
+        margin-top: 2px !important;
+      }
+    </style>
+    <style>
+      #sniplyBar.candy {
+        left: 0;
+        bottom: 0;
+        background-color: transparent;
+        margin-top: 10px;
+      }
+      #sniplyBar.candy.mobile {
+        width: 100%;
+        height: 87px;
+        bottom: -15px;
+        left: -15px;
+      }
+      #sniplyBar.candy.desktop {
+        width: 100%;
+        max-width: 100%;
+        height: 100px;
+      }
+
+      #socialbar.candy {
+        margin-left: 15px;
+        width: 87px;
+        height: 87px;
+        border-radius: 5px;
+      }
+      #socialbar.candy.mobile {
+        width: 60px;
+        height: 60px;
+      }
+      #socialbar.candy.top-right,
+      #socialbar.candy.bottom-right {
+        left: auto !important;
+        right: 0;
+        margin-right: 15px;
+      }
+
+      #profilePhoto.candy {
+        margin-left: 5px;
+        margin-top: 5px;
+        width: 77px;
+        height: 77px;
+        border-radius: 5px;
+      }
+      #profilePhoto.candy.mobile {
+        width: 60px;
+        height: 60px;
+      }
+
+      #profileName.candy {
+        width: 60%;
+        line-height: 20px;
+        font-size: 12px;
+        padding-bottom: 3px;
+      }
+
+      #logo.candy {
+        float: right;
+        text-decoration: none;
+      }
+      #logoImage.candy.desktop {
+        width: 46px;
+        height: 14px;
+        margin-top: 3px;
+      }
+
+      .messageContainer.candy {
+        min-width: 360px;
+        height: 87px;
+        left: 15px;
+
+        line-height: 18px;
+        padding: 10px 15px 10px 95px;
+        font-size: 16px;
+
+        border: 2px solid white;
+        border-radius: 9px;
+      }
+      .messageContainer.candy.mobile {
+        left: 105px;
+        height: 60px;
+      }
+      .messageContainer.candy.top-right,
+      .messageContainer.candy.bottom-right {
+        left: auto !important;
+        right: 15px;
+        padding-right: 95px;
+        padding-left: 15px;
+      }
+
+      #message.candy {
+        color: #3a3a3a;
+        height: 36px;
+        margin-top: 4px;
+      }
+
+      #messageText.candy {
+        height: 37px;
+      }
+
+      #formInput.candy.mobile {
+        margin-top: 2px !important;
+      }
+    </style>
+    <style>
+      #sniplyBar.bean {
+        left: 0;
+        bottom: 0;
+        background-color: transparent;
+        margin-top: 10px;
+      }
+      #sniplyBar.bean.mobile {
+        width: 100%;
+        height: 87px;
+        bottom: -15px;
+        left: -15px;
+      }
+      #sniplyBar.bean.desktop {
+        width: 100%;
+        max-width: 100%;
+        height: 100px;
+      }
+
+      #socialbar.bean {
+        margin-left: 15px;
+        width: 87px;
+        height: 87px;
+        border-radius: 5px;
+      }
+      #socialbar.bean.mobile {
+        width: 60px;
+        height: 60px;
+      }
+      #socialbar.bean.top-right,
+      #socialbar.bean.bottom-right {
+        left: auto !important;
+        right: 0;
+        margin-right: 18px;
+      }
+
+      #profilePhoto.bean {
+        margin-left: 6px;
+        margin-top: 5px;
+        width: 77px;
+        height: 77px;
+        border-radius: 40px;
+      }
+      #profilePhoto.bean.mobile {
+        width: 60px;
+        height: 60px;
+      }
+
+      #profileName.bean {
+        width: 60%;
+        line-height: 20px;
+        font-size: 12px;
+        padding-bottom: 3px;
+      }
+
+      #logo.bean {
+        float: right;
+        text-decoration: none;
+      }
+      #logoImage.bean.desktop {
+        width: 46px;
+        height: 14px;
+        margin-top: 3px;
+      }
+
+      .messageContainer.bean {
+        min-width: 370px;
+        height: 87px;
+        left: 15px;
+
+        line-height: 18px;
+        padding: 10px 25px 10px 95px;
+        font-size: 16px;
+
+        border: 2px solid white;
+        border-radius: 50px;
+      }
+      .messageContainer.bean.mobile {
+        left: 105px;
+        height: 60px;
+      }
+      .messageContainer.bean.top-right,
+      .messageContainer.bean.bottom-right {
+        left: auto !important;
+        right: 15px;
+        padding-right: 95px;
+        padding-left: 15px;
+      }
+
+      #message.bean {
+        color: #3a3a3a;
+        height: 36px;
+        margin-top: 4px;
+      }
+
+      #messageText.bean {
+        height: 37px;
+      }
+
+      .button.bean {
+        border-radius: 18px;
+      }
+
+      #formInput.bean.mobile {
+        margin-top: 2px !important;
+      }
+    </style>
+    <style>
+      #sniplyBar.image {
+        left: 0;
+        bottom: 0;
+        background-color: transparent;
+        margin-top: 10px;
+      }
+      #sniplyBar.image.mobile {
+        width: 100%;
+        bottom: -15px;
+        margin-top: 0px;
+      }
+      #sniplyBar.image.desktop {
+        width: 750px;
+        max-width: 750px;
+        height: 100px;
+      }
+      #sniplyBar.fullwidth.mobile.image {
+        height: 100%;
+      }
+
+      #socialbar.image {
+        width: 728px;
+        height: 90px;
+        border-radius: 5px;
+        object-fit: cover;
+      }
+      #socialbar.image.mobile.top-right {
+        top: 0;
+      }
+      #socialbar.image.mobile {
+        width: 100%;
+        margin-left: 0;
+        position: fixed;
+        bottom: 0;
+        height: inherit;
+      }
+      #socialbar.image.top-right,
+      #socialbar.image.bottom-right {
+        margin-left: 15px;
+        margin-right: 0px;
+      }
+      #socialbar.image.top-right.mobile,
+      #socialbar.image.bottom-right.mobile {
+        margin-left: 0px;
+        margin-top: 0px;
+      }
+
+      #socialbar.image.mobile #profilePhotoLink {
+        position: absolute;
+        bottom: 0;
+      }
+      #profilePhoto.image {
+        margin-left: 5px;
+        margin-top: 5px;
+        width: 728px;
+        height: 90px;
+        border-radius: 5px;
+      }
+      #profilePhoto.image.top-right,
+      #profilePhoto.image.bottom-right {
+        margin-left: 0px;
+        margin-right: 5px;
+      }
+      #profilePhoto.image.top-right.mobile,
+      #profilePhoto.image.bottom-right.mobile {
+        margin-right: 0px;
+      }
+      #profilePhoto.image.mobile {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        height: inherit;
+        display: block;
+      }
+
+      #profileName.image {
+        display: none;
+      }
+
+      #logoImage.image {
+        width: 46px;
+        height: 14px;
+        margin-top: 3px;
+      }
+      #logo.image {
+        float: right;
+      }
+
+      .tooltip.image.mobile {
+        left: 105px;
+        height: 60px;
+      }
+      .tooltip.image {
+        float: right;
+        position: relative;
+        z-index: 101;
+      }
+
+      #message.image {
+        display: none;
+      }
+      .messageContainer.image {
+        z-index: 999;
+        margin-left: 650px;
+        margin-top: 8px;
+        opacity: 0.7;
+        border-radius: 5px;
+      }
+      .messageContainer.image.hide_sniply_logo {
+        margin-left: 700px;
+      }
+      .messageContainer.image.mobile {
+        display: none !important;
+      }
+
+      #messageText.image {
+        display: none;
+      }
+
+      #minimizeToggle.image {
+        z-index: 999;
+      }
+
+      #whatsThis.image,
+      #minimizeToggle.image {
+        line-height: 16px;
+      }
+      #mobileWhatsThis.image.mobile {
+        top: 10px;
+        z-index: 99;
+      }
+    </style>
+    <style>
+      #sniplyBar.hidden {
+        display: none !important;
+      }
+    </style>
+
+    <script>
+      function record_click(empty) {
+        if (referrer == -1) {
+          referrer_callbacks.push({
+            func: record_click,
+            args: [],
+          });
+          return;
+        } else {
+          ga("send", "event", "All", "clicked message link");
+          if (is_v2) {
+            $.ajax({
+              url: "/api/v2/clicks/",
+              type: "POST",
+              beforeSend: function (request) {
+                request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+              },
+              data: {
+                link: get_slug(),
+                cta: cta.id,
+                referrer: referrer,
+                time: parseInt(
+                  (new Date().valueOf() - start_time.valueOf()) / 1000
+                ),
+              },
+            });
+          } else {
+            $.post("/record-click", {
+              slug: get_slug(),
+              referrer: referrer,
+            });
+          }
+        }
+      }
+
+      $(document).ready(function () {
+        message = {
+          status: "ok",
+          type: "referrer-request",
+          source: "sniply-bar",
+        };
+        parent.postMessage(JSON.stringify(message), "*");
+
+        $(
+          "#messageText > a, .buttonAction, .linkAction, #socialbar > a, #profileName, #messageText[onclick]"
+        ).click(function (e) {
+          if (referrer != -1) {
+            record_click([]);
+          } else {
+            referrer_callbacks.push({
+              func: record_click,
+              args: [],
+            });
+          }
+          e.stopPropagation();
+        });
+
+        function fix_profile_photo() {
+          if (done_initial_render) {
+            $.post(
+              "/fetch-profile-photo",
+              {
+                slug: get_slug(),
+              },
+              function (response) {
+                if (response && response.status == "ok" && response.photo) {
+                  $("#profilePhoto").attr("src", response.photo);
+                }
+              }
+            );
+          }
+          // make sure the callback only happens one time
+          $("#profilePhoto").unbind("error", fix_profile_photo);
+        }
+
+        $("#profilePhoto").error(fix_profile_photo);
+
+        var body = $("body");
+
+        body.on("click", "#minimizeToggle", function (e) {
+          e.preventDefault();
+          ga(
+            "send",
+            "event",
+            "All",
+            "clicked on minimize (x) in external page"
+          );
+          if (on_sniply == true) {
+            window.top.location.replace(cta.url);
+          } else {
+            message = {
+              status: "ok",
+              type: "remove-frame",
+              source: "sniply-bar",
+            };
+            parent.postMessage(JSON.stringify(message), "*");
+          }
+          return false;
+        });
+
+        $("#formButton").on("click", function (e) {
+          e.preventDefault();
+          $(".formAction").submit();
+        });
+
+        body.on("submit", ".formAction", function (e) {
+          e.preventDefault();
+          var value = $("#formInput").val();
+          if (value.length == 0 || value == "Thanks!") {
+            $("#formInput, #formButton").addClass("errorNotification");
+            return;
+          }
+          ga("send", "event", "All", "filled out form action");
+          $.ajax({
+            url: "/api/v2/campaigns/REPLACE/form_submissions/",
+            type: "POST",
+            beforeSend: function (request) {
+              request.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+            },
+            data: {
+              cta: cta.id,
+              slug: get_slug(),
+              submission: $(".formAction > input").val(),
+            },
+            success: function (response) {
+              $(".formAction > a").addClass("submittedFormAction");
+              $(".formAction > input").val("Thanks!");
+            },
+          });
+
+          if (referrer != -1) {
+            record_click([]);
+          } else {
+            referrer_callbacks.push({
+              func: record_click,
+              args: [],
+            });
+          }
+        });
+      });
+    </script>
+
+    <script>
+      var start_time = new Date();
+      $(document).ready(function () {
+        var view_id = null;
+        var is_landing_page_transition = true;
+
+        var temp_time = new Date();
+        var last_time_sent = new Date();
+
+        function record_view() {
+          if (referrer == -1) {
+            referrer_callbacks.push({
+              func: record_view,
+              args: [],
+            });
+            return;
+          } else if (cta == null) {
+            // the cta isn't loaded yet. give it another half second.
+            window.setTimeout(record_view, 500);
+          } else {
+            if (is_v2) {
+              $.ajax({
+                url: "/api/v2/views/",
+                type: "POST",
+                beforeSend: function (request) {
+                  request.setRequestHeader(
+                    "X-CSRFToken",
+                    getCookie("csrftoken")
+                  );
+                },
+                data: {
+                  link: get_slug(),
+                  referrer: referrer,
+                  cta: cta.id,
+                },
+                success: function (response) {
+                  view_id = response.id;
+                },
+                error: function (xhr, error) {
+                  if (
+                    xhr.responseText &&
+                    xhr.responseText.toLowerCase().indexOf("ignore") > 0
+                  ) {
+                    view_id = "ignore_view";
+                  }
+                },
+              });
+            } else {
+              $.post(
+                "/record-view",
+                {
+                  slug: get_slug(),
+                  referrer: referrer,
+                },
+                function (response) {
+                  view_id = response.view_id;
+                }
+              );
+            }
+          }
+        }
+
+        record_view();
+
+        (function page_timer() {
+          if (view_id == "ignore_view") {
+            return;
+          }
+
+          temp_time = new Date();
+          var seconds_changed = parseInt(
+            (temp_time.valueOf() - last_time_sent.valueOf()) / 1000
+          );
+          if (seconds_changed < 10) {
+            window.setTimeout(page_timer, 11 - seconds_changed);
+            return;
+          }
+
+          var time_on_page = parseInt(
+            (temp_time.valueOf() - start_time.valueOf()) / 1000
+          );
+          if (view_id == null) {
+            // something must have gone wrong, try to record a view again
+            record_view();
+          } else {
+            if (is_v2) {
+              $.ajax({
+                url: "/api/v2/views/REPLACE/".replace("REPLACE", view_id),
+                type: "PUT",
+                beforeSend: function (request) {
+                  request.setRequestHeader(
+                    "X-CSRFToken",
+                    getCookie("csrftoken")
+                  );
+                },
+                data: {
+                  change: "time",
+                  time_on_page: time_on_page,
+                },
+              });
+            } else {
+              $.post(
+                "/record-time",
+                {
+                  view_id: view_id,
+                  time_on_page: time_on_page,
+                },
+                function (response) {}
+              );
+            }
+          }
+          // ask to be re-run in 10 seconds if we haven't already been going for
+          // half an hour
+          if (time_on_page < 1811) {
+            window.setTimeout(page_timer, 10000);
+          }
+        })();
+
+        function record_page_transitions(empty) {
+          if (view_id != null && view_id != "" && view_id != "ignore_view") {
+            var time_on_page = parseInt(
+              (new Date().valueOf() - start_time.valueOf()) / 1000
+            );
+            if (is_v2) {
+              $.ajax({
+                url: "/api/v2/views/REPLACE/".replace("REPLACE", view_id),
+                type: "PUT",
+                beforeSend: function (request) {
+                  request.setRequestHeader(
+                    "X-CSRFToken",
+                    getCookie("csrftoken")
+                  );
+                },
+                data: {
+                  change: "page",
+                  time_on_page: time_on_page,
+                  is_landing_page_transition: is_landing_page_transition,
+                },
+              });
+            } else {
+              $.post(
+                "/record-page-transition",
+                {
+                  view_id: view_id,
+                  time_on_page: time_on_page,
+                  is_landing_page_transition: is_landing_page_transition,
+                },
+                function (response) {}
+              );
+            }
+            is_landing_page_transition = false;
+          }
+        }
+
+        content_load_callbacks.push({
+          func: record_page_transitions,
+          args: [],
+        });
+      });
+    </script>
+
+    <script type="text/javascript">
+      (function (i, s, o, g, r, a, m) {
+        i["GoogleAnalyticsObject"] = r;
+        (i[r] =
+          i[r] ||
+          function () {
+            (i[r].q = i[r].q || []).push(arguments);
+          }),
+          (i[r].l = 1 * new Date());
+        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m);
+      })(
+        window,
+        document,
+        "script",
+        "https://www.google-analytics.com/analytics.js",
+        "ga"
+      );
+
+      ga("create", "UA-48701732-1", "auto");
+      ga("set", "anonymizeIp", true);
+      ga("send", "pageview");
+    </script>
+
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
+
+    <script>
+      var cta = null;
+      var done_initial_render = false;
+      var referrer = -1;
+      var referrer_callbacks = [];
+      var content_load_callbacks = [];
+      var setup_contents = false;
+      var on_sniply = true; // false means we're embedded on another domain
+      var is_v2 = false; // gets set to true if the CTA we load is a v2 CTA
+
+      $(document).ready(function () {
+        $.ajax({
+          type: "GET",
+          url: "/api/cta/" + get_slug(),
+          success: function (response) {
+            cta = response;
+            is_v2 = cta.profile ? false : true;
+            render_snip();
+          },
+          error: function (xhr, error) {
+            // maybe there was a 404
+            $("#sniplyBar").remove();
+            var message = {
+              status: "ok",
+              type: "remove-frame",
+              source: "sniply-bar",
+            };
+            parent.postMessage(JSON.stringify(message), "*");
+          },
+        });
+      });
+
+      function get_slug() {
+        path = window.location.pathname.split("/").reverse();
+        for (var i = 0; i < path.length; i++) {
+          if (path[i] != "") {
+            return path[i];
+          }
+        }
+        if (path.length > 1) {
+          return path[1];
+        } else {
+          return path[0];
+        }
+      }
+
+      function render_snip() {
+        if (!setup_contents) {
+          if (cta.image_action) {
+            if (cta.image_action.image_url) {
+              $("#profilePhoto").attr("src", cta.image_action.image_url);
+              $("#profilePhotoLink").attr("href", cta.image_action_url_utm);
+            } else {
+              $("#profilePhoto").attr(
+                "src",
+                "https://ffb2efd5105ff0aedbc9-9cdacdeebf0faa19b665bf427f0c8092.ssl.cf1.rackcdn.com/images/placeholder.png"
+              );
+              $("#profilePhotoLink").attr("href", cta.image_action_url_utm);
+            }
+          } else {
+            $("#profilePhoto").attr(
+              "src",
+              (cta.profile ? cta.profile : cta.brand).photo_url.replace(
+                "_normal",
+                "_bigger"
+              )
+            );
+            $("#profilePhotoLink").attr(
+              "href",
+              cta.profile_url_utm ? cta.profile_url_utm : cta.brand.website
+            );
+          }
+
+          $("#profileName").text((cta.profile ? cta.profile : cta.brand).name);
+          $("#profileName").attr(
+            "href",
+            cta.profile_url_utm ? cta.profile_url_utm : cta.brand.website
+          );
+
+          setTimeout(function () {
+            if (
+              (cta.profile ? cta.profile : cta.brand) &&
+              (cta.profile ? cta.profile : cta.brand).custom_code
+            ) {
+              // Google Remarketing specific code
+              var custom_code = (cta.profile ? cta.profile : cta.brand)
+                .custom_code;
+
+              var has_google_remarketing = false;
+              var new_inject_code = "";
+              while (
+                custom_code.indexOf("[[GoogleRemarketing") >= 0 &&
+                custom_code.indexOf("]]") > 0
+              ) {
+                var tag_start_index = custom_code.indexOf(
+                  "[[GoogleRemarketing"
+                );
+                var substring = custom_code.substring(
+                  tag_start_index,
+                  custom_code.indexOf("]]", tag_start_index) + 2
+                );
+
+                var google_id = substring
+                  .replace("[[GoogleRemarketing", "")
+                  .replace("]]", "")
+                  .trim();
+                new_inject_code +=
+                  '<script type="text/javascript">/* <![CDATA[ */' +
+                  "window.google_trackConversion({" +
+                  "google_conversion_id: " +
+                  google_id +
+                  "," +
+                  "google_custom_params: window.google_tag_params," +
+                  "google_remarketing_only: true" +
+                  "});" +
+                  "//]]></sc" +
+                  "ript>";
+
+                // remove from custom code
+                custom_code = custom_code.replace(substring, "");
+                has_google_remarketing = true;
+              }
+
+              if (has_google_remarketing) {
+                // inject Google Remarketing library code
+                var elem = document.createElement("script");
+                $("#custom-code-container").append(elem);
+                elem.onload = function () {
+                  $("#custom-code-container").append(new_inject_code);
+                };
+                elem.src =
+                  "https://www.googleadservices.com/pagead/conversion_async.js";
+              }
+
+              document.write = function (str) {
+                $("#custom-code-container").prepend(str);
+              };
+
+              $("#custom-code-container").html(custom_code);
+            }
+          }, 0);
+
+          if (cta.owned_domain) {
+            $("#whatsThis, #mobileWhatsThis").addClass("hidden");
+          }
+          if (cta.common_classes.indexOf("hide_sniply_logo") >= 0) {
+            if (
+              (cta.profile ? cta.profile : cta.brand).hasOwnProperty(
+                "custom_url"
+              ) &&
+              (cta.profile ? cta.profile : cta.brand).custom_url
+            ) {
+              var custom_url = (cta.profile ? cta.profile : cta.brand)
+                .custom_url;
+              $("#whatsThis, #mobileWhatsThis").attr(
+                "href",
+                custom_url + "/whats-this2"
+              );
+            } else {
+              $("#whatsThis, #mobileWhatsThis").attr("href", "/whats-this2");
+            }
+          }
+
+          $("#logo").attr("href", cta.affiliate_link);
+
+          $("#messageText").text(cta.message);
+          if (cta.button_action) {
+            $("#messageText").click(function () {
+              window.open(cta.button_action_url_utm, "_blank");
+            });
+          }
+
+          if (cta.form_action) {
+            $("#formInput").attr(
+              "placeholder",
+              cta.form_action.placeholder_text
+            );
+          }
+
+          if (cta.button_action) {
+            $("#buttonAction")
+              .attr("href", cta.button_action_url_utm)
+              .text(cta.button_action.text);
+            if (cta.button_action_url_utm.indexOf("mailto:") != 0) {
+              $("#buttonAction")
+                .attr("target", "_blank")
+                .attr("rel", "nofollow");
+            }
+            if (cta.button_action.is_text) {
+              $("#buttonAction").addClass("linkAction");
+            } else {
+              $("#buttonAction").addClass("buttonAction");
+            }
+          }
+
+          if (cta.message_color) {
+            $(
+              "#message, #messageText, #profileName, #minimizeToggle, #whatsThis"
+            ).css({
+              color: cta.message_color,
+            });
+          }
+          if (cta.button_action && cta.button_action.text_color) {
+            $(".button").css({
+              color: cta.button_action.text_color,
+            });
+          }
+          if (cta.form_action && cta.form_action.button_text_color) {
+            $(".button").css({
+              color: cta.form_action.button_text_color,
+            });
+          }
+          if (cta.button_action && cta.button_action.background_color) {
+            $("#messageText > a").css({
+              color: cta.button_action.background_color,
+            });
+            $(".button").css({
+              "background-color": cta.button_action.background_color,
+              "border-color": cta.button_action.background_color,
+            });
+          }
+          if (cta.form_action && cta.form_action.button_background_color) {
+            $("#messageText > a").css({
+              color: cta.form_action.button_background_color,
+            });
+            $(".button").css({
+              "background-color": cta.form_action.button_background_color,
+              "border-color": cta.form_action.button_background_color,
+            });
+          }
+          if (cta.background_color) {
+            $(".messageContainer").css({
+              "background-color": cta.background_color,
+              "border-color": cta.background_color,
+            });
+            $("#speechArrow").css({
+              "border-color": cta.background_color,
+            });
+          }
+
+          if (!cta.form_action) {
+            $(".formAction").addClass("hidden");
+          }
+          if (!cta.button_action) {
+            $("#buttonAction").addClass("hidden");
+          }
+
+          $(".common-classes").addClass(cta.common_classes);
+
+          setup_contents = true;
+        }
+
+        if ($(window).width() == 0) {
+          window.setTimeout(render_snip, 100);
+          return;
+        }
+        updateSizing($(window).width());
+        $("#dropshadowMessageContainer").width(
+          $("#contentMessageContainer").width()
+        );
+        $(window).resize(function () {
+          $("#dropshadowMessageContainer").width(
+            $("#contentMessageContainer").width()
+          );
+        });
+
+        window.setTimeout(function () {
+          $("#dropshadowMessageContainer").width(
+            $("#contentMessageContainer").width()
+          );
+        }, 1000);
+
+        calculate_sizes_and_notify_parent();
+        done_initial_render = true;
+      }
+
+      function calculate_sizes_and_notify_parent() {
+        $("#contentMessageContainer").hide().show(0);
+        document.getElementById("sniplyBar").style.display = "none";
+        document.getElementById("sniplyBar").style.display = "block";
+        var cta_width = 0;
+        var cta_height = 0;
+        if (cta.position.indexOf("right") == -1) {
+          if (cta.image_action) {
+            cta_width =
+              $("#profilePhotoLink").position().left +
+              $("#profilePhotoLink").outerWidth() +
+              parseInt($("#socialbar").css("margin-left"));
+            if (cta_width > 600) {
+              cta_width += 10;
+            }
+          } else {
+            cta_width =
+              $("#contentMessageContainer").position().left +
+              $("#contentMessageContainer").outerWidth() +
+              10;
+          }
+        } else {
+          if (cta.image_action) {
+            cta_width = $("#profilePhotoLink").outerWidth();
+            if (cta_width > 600) {
+              cta_width += 10;
+            }
+          } else {
+            cta_width =
+              $(window).width() -
+              $("#contentMessageContainer").position().left +
+              10;
+          }
+        }
+
+        if (cta.image_action && $(window).width() <= 700) {
+          cta_height = ($(window).width() * 90) / 728 + 10;
+        } else {
+          cta_height = $("#socialbar").outerHeight() + 20;
+        }
+
+        var message = {
+          status: "ok",
+          type: "resize-request",
+          source: "sniply-bar",
+          width: cta_width,
+          height: cta_height,
+          cta: cta,
+          fullwidth_forced: $(".fullwidth-forced").length > 0,
+        };
+        parent.postMessage(JSON.stringify(message), "*");
+      }
+
+      function handlePostMessages(evt) {
+        var event_data = {};
+        try {
+          var event_data =
+            (JSON && JSON.parse(evt.data)) || $.parseJSON(evt.data);
+        } catch (err) {
+          return;
+        }
+
+        if (
+          !event_data.source ||
+          event_data.source.indexOf("sniply-parent") == -1
+        ) {
+          return;
+        }
+        if (!event_data.status || event_data.status.indexOf("ok") == -1) {
+          return;
+        }
+        if (!event_data.type) {
+          return;
+        }
+        switch (event_data.type) {
+          case "window-resize-event": {
+            updateSizing(event_data.width);
+            calculate_sizes_and_notify_parent();
+            break;
+          }
+          case "referrer-notification": {
+            referrer = event_data.referrer;
+            for (var i = 0; i < referrer_callbacks.length; i++) {
+              referrer_callbacks[i].func(referrer_callbacks[i].args);
+            }
+            referrer_callbacks = [];
+            break;
+          }
+          case "content-load-event": {
+            for (var i = 0; i < content_load_callbacks.length; i++) {
+              content_load_callbacks[i].func(content_load_callbacks[i].args);
+            }
+            break;
+          }
+          case "is-on-sniply-notification": {
+            on_sniply = event_data.on_sniply;
+            break;
+          }
+          default: {
+            return;
+          }
+        }
+      }
+
+      if (window.addEventListener) {
+        window.addEventListener("message", handlePostMessages, false);
+      } else {
+        window.attachEvent("onmessage", handlePostMessages);
+      }
+    </script>
+
+    <div
+      id="sniplyBar"
+      class="animated common-classes sized social bottom hide_sniply_logo desktop"
+      style="display: block;"
+    >
+      <span
+        id="socialbar"
+        class="common-classes sized social bottom hide_sniply_logo desktop"
+      >
+        <a
+          href="/whats-this2"
+          class="common-classes evenly-pad hidden sized social bottom hide_sniply_logo desktop"
+          id="mobileWhatsThis"
+          target="_blank"
+          ><i class="fa fa-question-circle"></i
+        ></a>
+
+        <a
+          href="http://www.twitter.com/sniply?utm_source=sniply&amp;utm_campaign=sniply&amp;utm_medium=sniply"
+          target="_blank"
+          id="profilePhotoLink"
+        >
+          <img
+            src="https://pbs.twimg.com/profile_images/501999060065079296/RuYOiOw1_bigger.png"
+            alt=""
+            id="profilePhoto"
+            class="common-classes sized social bottom hide_sniply_logo desktop"
+          />
+        </a>
+      </span>
+
+      <span
+        class="messageContainer common-classes sized social bottom hide_sniply_logo desktop"
+        id="contentMessageContainer"
+        style="
+          background-color: rgb(255, 255, 255);
+          border-color: rgb(255, 255, 255);
+          display: block;
+        "
+      >
+        <a
+          id="minimizeToggle"
+          class="animated common-classes evenly-pad sized social bottom hide_sniply_logo desktop"
+          style="color: rgb(34, 34, 34);"
+          >×</a
+        >
+
+        <a
+          href="/whats-this2"
+          class="common-classes evenly-pad hidden sized social bottom hide_sniply_logo desktop"
+          id="whatsThis"
+          target="_blank"
+          data-toggle="tooltip"
+          title="This message was added by the user who shared this link. Click to learn more."
+          style="color: rgb(34, 34, 34);"
+          ><i class="fa fa-question-circle"></i
+        ></a>
+
+        <a
+          href="https://snip.ly?utm_campaign=sniplylogo"
+          class="common-classes evenly-pad sized social bottom hide_sniply_logo desktop"
+          id="logo"
+          onclick="ga('send', 'event', 'All', 'clicked on sniply logo in external page');"
+          target="_blank"
+        >
+          <div
+            id="logoImage"
+            class="common-classes sized social bottom hide_sniply_logo desktop"
+          ></div>
+        </a>
+
+        <a
+          href="http://www.twitter.com/sniply?utm_source=sniply&amp;utm_campaign=sniply&amp;utm_medium=sniply"
+          id="profileName"
+          class="common-classes sized social bottom hide_sniply_logo desktop"
+          target="_blank"
+          style="color: rgb(34, 34, 34);"
+          >Sniply</a
+        >
+
+        <span
+          id="message"
+          class="common-classes sized social bottom hide_sniply_logo desktop"
+          style="color: rgb(34, 34, 34);"
+        >
+          <span
+            id="messageText"
+            class="common-classes sized social bottom hide_sniply_logo desktop"
+            style="color: rgb(34, 34, 34);"
+            >This is a sample message</span
+          >
+
+          <form
+            class="formAction common-classes hidden sized social bottom hide_sniply_logo desktop"
+          >
+            <a
+              href=""
+              id="formButton"
+              class="animated button common-classes sized social bottom hide_sniply_logo desktop"
+              style="
+                color: rgb(255, 255, 255);
+                background-color: rgb(0, 191, 255);
+                border-color: rgb(0, 191, 255);
+              "
+              >✔</a
+            >
+            <input
+              type="text"
+              id="formInput"
+              class="common-classes sized social bottom hide_sniply_logo desktop"
+            />
+          </form>
+
+          <a
+            href="http://snip.ly?utm_source=sniply&amp;utm_campaign=sniply&amp;utm_medium=sniply"
+            class="button common-classes buttonAction sized social bottom hide_sniply_logo desktop"
+            id="buttonAction"
+            target="_blank"
+            rel="nofollow"
+            style="
+              color: rgb(255, 255, 255);
+              background-color: rgb(0, 191, 255);
+              border-color: rgb(0, 191, 255);
+            "
+            >Button</a
+          >
+        </span>
+      </span>
+
+      <span
+        class="messageContainer common-classes sized social bottom hide_sniply_logo desktop"
+        id="dropshadowMessageContainer"
+        style="
+          background-color: rgb(255, 255, 255);
+          border-color: rgb(255, 255, 255);
+          width: 339px;
+        "
+      >
+        <span
+          id="speechArrow"
+          class="common-classes sized social bottom hide_sniply_logo desktop"
+          style="border-color: rgb(255, 255, 255);"
+        ></span>
+      </span>
+    </div>
+    <div
+      style="z-index: -10000000; display: none;"
+      id="custom-code-container"
+    ></div>
+
+    <script>
+      function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != "") {
+          var cookies = document.cookie.split(";");
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+    </script>
+  </body>
+</html>
