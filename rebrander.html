@@ -1,54 +1,151 @@
 <!DOCTYPE html>
-
+<!-- TO test file:///home/leo/Documents/link-rebrander/rebrander.html?url=https://es.cointelegraph.com/news/mike-novogratz-on-telegram-we-dont-need-another-crypto&title=CustomTitle -->
 <html lang="es">
   <head>
     <meta charset="utf-8" />
 
-    <title>The HTML5 Herald</title>
-    <meta name="description" content="The HTML5 Herald" />
-    <meta name="author" content="SitePoint" />
+    <title>Rebrander</title>
+    <meta name="description" content="Rebrander Link" />
 
-    <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/augmented-ui/augmented.css"
+    />
   </head>
 
   <style type="text/css">
     ::-webkit-scrollbar {
       display: none;
     }
+    .background-loader {
+      z-index: 10;
+      position: absolute;
+      bottom: 50vh;
+      width: 100vw;
+    }
     .iframe-content {
       height: 100vh;
-      z-index: 10;
+      z-index: 1000;
+      position: absolute;
+    }
+    .floating-cta {
+      z-index: 100000;
+      position: absolute;
+      bottom: 0;
+      width: 100vw;
+    }
+    div.cta-text {
+      font-family: BlenderProBold, sans-serif;
+      color: white;
+      width: fit-content;
+      height: fit-content;
+      margin: 0.5rem;
+      padding: 1.2rem;
+      text-align: center;
+      font-size: 120%;
+      --aug-inset-bg: black;
+      --aug-bl: 5px;
+      --aug-tr: 5px;
+      flex-direction: column;
+    }
+    a.cta-button {
+      text-decoration: none;
+      color: black;
+      --aug-inset-bg: white;
+      --aug-bl: 5px;
+      --aug-tr: 5px;
+      padding: 0.8rem;
+      margin-right: -0.8rem;
     }
   </style>
 
+  <script type="text/javascript">
+    let iframeLoaded = () => {
+      //Does nothing on first load
+    };
+  </script>
+
   <body style="margin: 0;">
+    <div id="background-loader" class="background-loader">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        style="margin: auto; background: transparent; display: block;"
+        width="200px"
+        height="200px"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="xMidYMid"
+      >
+        <circle
+          cx="50"
+          cy="50"
+          fill="none"
+          stroke="#2992da"
+          stroke-width="9"
+          r="35"
+          stroke-dasharray="164.93361431346415 56.97787143782138"
+          transform="rotate(210.469 50 50)"
+        >
+          <animateTransform
+            attributeName="transform"
+            type="rotate"
+            repeatCount="indefinite"
+            dur="1s"
+            values="0 50 50;360 50 50"
+            keyTimes="0;1"
+          ></animateTransform>
+        </circle>
+      </svg>
+    </div>
+
     <iframe
       class="iframe-content"
       id="iframe-content"
-      src=""
       width="100%"
       frameborder="0"
       scrolling="0"
+      onload="iframeLoaded()"
     ></iframe>
 
     <!-- Branded CTA -->
-    <div>
-
-    </div>>
+    <div hidden id="floating-cta" class="floating-cta">
+      <div
+        class="cta-text"
+        augmented-ui="tl-clip br-clip bl-round tr-round exe"
+      >
+        Para mas contenido similar
+        <a
+          href="https://www.google.com"
+          class="cta-button"
+          augmented-ui="tl-clip br-clip bl-round tr-round exe"
+          >Visita Rebrander</a
+        >
+      </div>
+    </div>
 
     <!-- Script to get url params to change iframe url -->
     <script type="text/javascript">
-      const hasParam = (paramName) => {
-        // eslint-disable-next-line no-unused-vars
-        const [_, search] = window.location.search.split("?");
-        const searchParams = new URLSearchParams(search);
-        return searchParams.get(paramName);
-      };
+      setTimeout(() => {
+        const hasParam = (paramName) => {
+          // eslint-disable-next-line no-unused-vars
+          const [_, search] = window.location.search.split("?");
+          const searchParams = new URLSearchParams(search);
+          return searchParams.get(paramName);
+        };
 
-      console.log("hasParam('url'): ", hasParam("url"));
-      const url = hasParam("url");
-      const iframeElement = document.getElementById("iframe-content");
-      iframeElement.setAttribute("src", url);
+        const url = hasParam("url");
+        const iframeElement = document.getElementById("iframe-content");
+        iframeElement.setAttribute("src", url);
+        const title = hasParam("title");
+        if (title) document.title = title;
+
+        //Re-assign to load CTA
+        iframeLoaded = () => {
+          const loaderElement = document.getElementById("floating-cta");
+          loaderElement.hidden = false;
+        };
+      }, 0);
     </script>
   </body>
 </html>
