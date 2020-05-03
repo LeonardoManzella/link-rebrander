@@ -34,13 +34,13 @@
       position: absolute;
       bottom: 0;
       width: 100vw;
+      padding: 0.5rem;
     }
     div.cta-text {
       font-family: BlenderProBold, sans-serif;
       color: white;
       width: fit-content;
       height: fit-content;
-      margin: 0.5rem;
       padding: 1.2rem;
       text-align: center;
       font-size: 120%;
@@ -57,6 +57,37 @@
       --aug-tr: 5px;
       padding: 0.8rem;
       margin-right: -0.8rem;
+    }
+    .image-text-cta {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    div.image-text-cta-img {
+      --aug-border: 3px;
+      --aug-border-bg: black;
+      --aug-bl: 5px;
+      --aug-tr: 5px;
+    }
+    div.image-text-cta-img img {
+      max-height: 5rem;
+    }
+    div.image-text-cta-text {
+      font-family: BlenderProBold, sans-serif;
+      color: white;
+      width: fit-content;
+      height: fit-content;
+      padding: 1.2rem;
+      text-align: center;
+      font-size: 120%;
+      --aug-inset-bg: black;
+      --aug-br: 5px;
+      --aug-tr: 5px;
+      flex-direction: column;
+      margin-left: 0.5rem;
+      --aug-tl: 1.8rem;
+      --aug-bl: 1.8rem;
     }
   </style>
 
@@ -110,7 +141,10 @@
 
     <!-- Branded CTA -->
     <div hidden id="floating-cta" class="floating-cta">
+      <!-- Text CTA -->
       <div
+        hidden
+        id="cta-text"
         class="cta-text"
         augmented-ui="tl-clip br-clip bl-round tr-round exe"
       >
@@ -121,6 +155,33 @@
           augmented-ui="tl-clip br-clip bl-round tr-round exe"
           >Visita Rebrander</a
         >
+      </div>
+
+      <!-- Image text CTA -->
+      <div id="image-text-cta" class="image-text-cta">
+        <div
+          class="image-text-cta-img"
+          augmented-ui="tl-clip br-clip bl-round tr-round exe"
+        >
+          <img
+            id="image-text-cta-img"
+            src="https://media-exp1.licdn.com/dms/image/C4E03AQEK1Rvh_7YQMg/profile-displayphoto-shrink_200_200/0?e=1594252800&v=beta&t=U6sGwmy1AB5bXp1JWwEX_AxLj0iH3iQ-dS5l1zGOI-w"
+          />
+        </div>
+
+        <div
+          id="image-text-cta-text"
+          class="image-text-cta-text"
+          augmented-ui="tl-clip bl-clip br-round tr-round exe"
+        >
+          Para mas contenido similar
+          <a
+            href="https://www.google.com"
+            class="cta-button"
+            augmented-ui="tl-clip br-clip bl-round tr-round exe"
+            >Visita Rebrander</a
+          >
+        </div>
       </div>
     </div>
 
