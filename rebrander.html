@@ -1,4 +1,4 @@
-!doctype html>
+<!DOCTYPE html>
 
 <html lang="es">
   <head>
@@ -11,12 +11,44 @@
     <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
   </head>
 
-  <body>
-      <!-- TODO iframe page content -->
+  <style type="text/css">
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .iframe-content {
+      height: 100vh;
+      z-index: 10;
+    }
+  </style>
 
-      <!-- TODO branded CTA -->
+  <body style="margin: 0;">
+    <iframe
+      class="iframe-content"
+      id="iframe-content"
+      src=""
+      width="100%"
+      frameborder="0"
+      scrolling="0"
+    ></iframe>
 
-      <!-- TODO script to get url params to change iframe url -->
-    <!-- <script src="js/scripts.js"></script> -->
+    <!-- Branded CTA -->
+    <div>
+
+    </div>>
+
+    <!-- Script to get url params to change iframe url -->
+    <script type="text/javascript">
+      const hasParam = (paramName) => {
+        // eslint-disable-next-line no-unused-vars
+        const [_, search] = window.location.search.split("?");
+        const searchParams = new URLSearchParams(search);
+        return searchParams.get(paramName);
+      };
+
+      console.log("hasParam('url'): ", hasParam("url"));
+      const url = hasParam("url");
+      const iframeElement = document.getElementById("iframe-content");
+      iframeElement.setAttribute("src", url);
+    </script>
   </body>
 </html>
